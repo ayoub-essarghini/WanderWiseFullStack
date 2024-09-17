@@ -7,7 +7,7 @@ import {catchError, map, Observable, of} from "rxjs";
 })
 export class AuthService {
 
-  private baseUrl = 'http://localhost:8082/api/auth';
+  private baseUrl = 'http://localhost:8082/auth/login';
   private loggedIn = false;
   constructor(private http: HttpClient) { }
 
