@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {catchError, map, Observable, of} from "rxjs";
 
 @Injectable({
@@ -8,31 +8,32 @@ import {catchError, map, Observable, of} from "rxjs";
 export class AuthService {
 
   private baseUrl = 'http://localhost:8082/auth/login';
-  private loggedIn = false;
+  private isLogged = false;
   constructor(private http: HttpClient) { }
 
-  login(username: string, password: string):Observable<boolean>
+  login(username: string, password: string)
   {
-    return this.http.post<any>(`${this.baseUrl}/login`,{username,password}).pipe(
-      map(response => {
-        if (response.token)
-        {
-          localStorage.setItem('token',response.token);
-          this.loggedIn = true;
-          return true;
-        }
-        return false;
-      }),
-      catchError(() => of(false))
-    );
+    let options =
+      {
+      headers: new HttpHeaders().set("Content-type","application/x-www-form-urlencoded")
+      }
+      let params = new HttpParams().set("username",username).set("password",password);
+    return this.http.post(this.baseUrl,params,options).subscribe({
+      next: value => {
+        console.log(value);
+        this.isLogged= true;
+      },
+      error: err => {
+        console.log(err)
+        this.isLogged = false;
+      }
+    });
   }
 
-  isLoggedIn(): boolean {
-    return this.loggedIn && !!localStorage.getItem('token');
+  isLoggedIn()
+  {
+    return this.isLogged;
   }
 
-  logout(): void {
-    localStorage.removeItem('token');
-    this.loggedIn = false;
-  }
+
 }

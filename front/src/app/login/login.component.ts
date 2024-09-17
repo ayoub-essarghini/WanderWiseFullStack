@@ -29,6 +29,6 @@ export class LoginComponent implements OnInit{
   {
     let username = this.formLogin.value.username;
     let password = this.formLogin.value.password;
-
+    this.authServ.login(username,password);
   }
 }
