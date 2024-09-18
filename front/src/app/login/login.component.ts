@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
+import {Router} from "@angular/router";
+import {routes} from "../app.routes";
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,7 @@ export class LoginComponent implements OnInit{
 
   formLogin! : FormGroup
 
-  constructor(private fb: FormBuilder,private authServ: AuthService) {
+  constructor(private fb: FormBuilder,private authServ: AuthService,private router:Router) {
   }
 
   ngOnInit(): void {
@@ -29,6 +31,14 @@ export class LoginComponent implements OnInit{
   {
     let username = this.formLogin.value.username;
     let password = this.formLogin.value.password;
-    this.authServ.login(username,password);
+    this.authServ.login(username,password).subscribe({
+      next: data => {
+        this.authServ.loadProfile(data);
+        this.router.navigateByUrl("/admin/dashboard");
+      },
+      error: err =>{
+        console.log(err)
+      }
+    });
   }
 }
