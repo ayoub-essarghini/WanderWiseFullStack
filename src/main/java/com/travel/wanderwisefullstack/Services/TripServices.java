@@ -1,10 +1,8 @@
 package com.travel.wanderwisefullstack.Services;
 
 import com.travel.wanderwisefullstack.Repositories.TripRepository;
+import com.travel.wanderwisefullstack.models.AppUser;
 import com.travel.wanderwisefullstack.models.Trip;
-import com.travel.wanderwisefullstack.models.User;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +21,7 @@ public class TripServices {
         return tripRepository.findAll();
     }
 
-    public List<Trip> getUserTrips(User user)
+    public List<Trip> getUserTrips(AppUser user)
     {
         return tripRepository.findByUser(user);
     }

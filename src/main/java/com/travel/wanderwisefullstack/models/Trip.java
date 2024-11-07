@@ -26,5 +26,5 @@ public class Trip {
     private String itinerary;
 
     @ManyToOne
-    private User user;
+    private AppUser user;
 }

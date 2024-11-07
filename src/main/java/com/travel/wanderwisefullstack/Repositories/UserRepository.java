@@ -1,8 +1,13 @@
 package com.travel.wanderwisefullstack.Repositories;
 
-import com.travel.wanderwisefullstack.models.User;
+import com.travel.wanderwisefullstack.models.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
+import java.util.List;
+
+
+public interface UserRepository extends JpaRepository<AppUser, Long> {
+    AppUser findByUsername(String username);
+    List<AppUser> findByUsernameNot(String username);
+
 }

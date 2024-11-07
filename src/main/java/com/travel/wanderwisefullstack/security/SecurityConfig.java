@@ -1,105 +1,77 @@
 package com.travel.wanderwisefullstack.security;
 
 
-import com.nimbusds.jose.jwk.source.ImmutableSecret;
-import org.springframework.beans.factory.annotation.Value;
+import com.travel.wanderwisefullstack.Services.AccountService;
+import com.travel.wanderwisefullstack.filters.JwtAuthFilter;
+import com.travel.wanderwisefullstack.filters.JwtFilter;
+import com.travel.wanderwisefullstack.models.AppUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import javax.crypto.spec.SecretKeySpec;
-import java.util.List;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
-
 public class SecurityConfig {
 
-    @Value("${jwt.secret}")
-    private String secretKey;
-    @Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-        PasswordEncoder passwordEncoder = passwordEncoder();
-        return new InMemoryUserDetailsManager(
 
-                User.withUsername("admin").password(passwordEncoder.encode("password")).authorities("USER", "ADMIN").build(),
-                User.withUsername("user").password(passwordEncoder.encode("user")).authorities("user").build()
-        );
+    private final AccountService accountService;
+
+    public SecurityConfig(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public UserDetailsService userDetailsService() {
+        return username -> {
+            AppUser appUser = accountService.loadUserByUsername(username);
+            if (appUser == null) {
+                throw new UsernameNotFoundException("User not found: " + username);
+            }
+            Collection<GrantedAuthority> authorities = new ArrayList<>();
+            appUser.getRoles().forEach(r -> {
+                authorities.add(new SimpleGrantedAuthority(r.getName()));
+            });
+            return new User(appUser.getUsername(), appUser.getPassword(), authorities);
+        };
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf(csrf -> csrf.disable())
-                .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(ar -> ar.requestMatchers("/auth/login/**").permitAll())
-                .authorizeHttpRequests(ar -> ar.anyRequest().authenticated())
-//                .httpBasic(Customizer.withDefaults())
-                .oauth2ResourceServer(oa -> oa.jwt(Customizer.withDefaults()))
-                .build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
 
+        http.csrf(AbstractHttpConfigurer::disable).sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).headers(headers -> headers
+                // Disable all default headers
+                .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable) // Disable only X-Frame-Options
+        ).authorizeHttpRequests(authorize -> authorize.requestMatchers("/h2-console/**").permitAll().anyRequest().authenticated()).addFilter(new JwtFilter(authenticationManager)).addFilterBefore(new JwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
     }
 
-    @Bean
-    JwtEncoder jwtEncoder() {
-//        String secretKey = "vwtSk6hcK0MhSq5uNCpjbUvYR8lKmVVbngQ6duNchJ59IoUqbwLHlVc1+Kqw42sS";
-        return new NimbusJwtEncoder((new ImmutableSecret<>(secretKey.getBytes())));
-    }
 
     @Bean
-    JwtDecoder jwtDecoder() {
-//        String secretKey = "vwtSk6hcK0MhSq5uNCpjbUvYR8lKmVVbngQ6duNchJ59IoUqbwLHlVc1+Kqw42sS";
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "RSA");
-        return NimbusJwtDecoder.withSecretKey(secretKeySpec).macAlgorithm(MacAlgorithm.HS512).build();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService)
-    {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-        return new ProviderManager(daoAuthenticationProvider);
-    }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource()
-    {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedMethod("*");
-        configuration.addAllowedHeader("*");
-//        configuration.setExposedHeaders(List.of("x-auth-token"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(userDetailsService());
+        return authenticationManagerBuilder.build();
     }
 
 
