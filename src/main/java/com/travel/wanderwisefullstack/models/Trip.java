@@ -1,9 +1,13 @@
 package com.travel.wanderwisefullstack.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -15,8 +19,10 @@ public class Trip {
     private Long id;
     private String destination;
     private String description;
-    private Date startDate;
-    private Date endDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime startDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime endDate;
     private Double price;
 
     private Integer duration;
@@ -25,6 +31,6 @@ public class Trip {
     @Lob
     private String itinerary;
 
-    @ManyToOne
-    private AppUser user;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<AppUser> users = new ArrayList<>();
 }

@@ -1,4 +1,4 @@
-package com.travel.wanderwisefullstack.Services;
+package com.travel.wanderwisefullstack.Services.user;
 
 
 

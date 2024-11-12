@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -23,6 +25,8 @@ public class AppUser {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<AppRole> roles = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<Trip> trips = new ArrayList<>();
 
 
 }

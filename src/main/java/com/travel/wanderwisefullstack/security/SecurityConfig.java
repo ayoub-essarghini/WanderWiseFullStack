@@ -1,11 +1,10 @@
 package com.travel.wanderwisefullstack.security;
 
 
-import com.travel.wanderwisefullstack.Services.AccountService;
+import com.travel.wanderwisefullstack.Services.user.AccountService;
 import com.travel.wanderwisefullstack.filters.JwtAuthFilter;
 import com.travel.wanderwisefullstack.filters.JwtFilter;
 import com.travel.wanderwisefullstack.models.AppUser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

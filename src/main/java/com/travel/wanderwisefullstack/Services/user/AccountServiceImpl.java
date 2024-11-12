@@ -1,4 +1,4 @@
-package com.travel.wanderwisefullstack.Services;
+package com.travel.wanderwisefullstack.Services.user;
 
 
 import com.travel.wanderwisefullstack.Repositories.RoleRepository;
@@ -6,14 +6,11 @@ import com.travel.wanderwisefullstack.Repositories.UserRepository;
 import com.travel.wanderwisefullstack.Response.UserAlreadyExistsException;
 import com.travel.wanderwisefullstack.models.AppRole;
 import com.travel.wanderwisefullstack.models.AppUser;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -49,6 +46,8 @@ public class AccountServiceImpl implements AccountService {
     public AppRole addNewRole(AppRole role) {
         return _roleRepository.save(role);
     }
+
+
 
     @Override
     public void addRoleToUser(String username, String roleName) {
