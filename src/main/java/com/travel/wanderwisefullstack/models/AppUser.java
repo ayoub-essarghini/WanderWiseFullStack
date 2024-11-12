@@ -25,7 +25,8 @@ public class AppUser {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<AppRole> roles = new ArrayList<>();
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Trip> trips = new ArrayList<>();
 
 

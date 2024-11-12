@@ -45,6 +45,7 @@ public class TripController {
         }
     }
 
+
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity < Trip> createTrip(@RequestBody Trip trip) {

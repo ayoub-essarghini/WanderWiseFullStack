@@ -31,6 +31,5 @@ public class Trip {
     @Lob
     private String itinerary;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<AppUser> users = new ArrayList<>();
+
 }

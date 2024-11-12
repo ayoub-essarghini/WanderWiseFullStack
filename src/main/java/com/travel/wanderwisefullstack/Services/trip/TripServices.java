@@ -28,6 +28,8 @@ public class TripServices {
     {
         return tripRepository.findAll();
     }
+
+
     public void bookTrip(Long id)
     {
         if (tripRepository.findById(id).isPresent())
@@ -36,16 +38,14 @@ public class TripServices {
             String currentUsername = authentication.getName();
             Trip trip = tripRepository.findById(id).get();
             AppUser user = accountService.findByUsername(currentUsername);
+
             user.getTrips().add(trip);
             user.setTrips(user.getTrips());
             accountService.save(user);
             tripRepository.save(trip);
-
-
         }
 
     }
-
 
     public Trip getTripById(Long id)
     {

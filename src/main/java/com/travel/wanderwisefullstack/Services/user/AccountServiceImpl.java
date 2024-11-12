@@ -6,6 +6,8 @@ import com.travel.wanderwisefullstack.Repositories.UserRepository;
 import com.travel.wanderwisefullstack.Response.UserAlreadyExistsException;
 import com.travel.wanderwisefullstack.models.AppRole;
 import com.travel.wanderwisefullstack.models.AppUser;
+import com.travel.wanderwisefullstack.models.Trip;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@Lazy
 public class AccountServiceImpl implements AccountService {
 
     private final UserRepository _userRepository;
@@ -43,8 +46,8 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Override
-    public AppRole addNewRole(AppRole role) {
-        return _roleRepository.save(role);
+    public void addNewRole(AppRole role) {
+        _roleRepository.save(role);
     }
 
 
@@ -55,6 +58,8 @@ public class AccountServiceImpl implements AccountService {
         AppRole role = _roleRepository.findByName(roleName);
         user.getRoles().add(role);
     }
+
+
 
     @Override
     public AppUser loadUserByUsername(String username) {
