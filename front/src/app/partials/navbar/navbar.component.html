@@ -1,0 +1,21 @@
+<nav class="navbar p-3">
+  <div class="navbar-brand" routerLink="" >
+    Travel<span [ngStyle]="{color:'#2081b4',cursor:'pointer'}"  >Tour</span>
+  </div>
+  <div class="nav-content" >
+    <li
+      *ngFor="let link of links; let i=index"
+      (mouseenter)="onHovered(i)"
+      (mouseleave)="clearHover()"
+      (click)="setActiveLink(i)"
+      [ngClass]="{'active': isActiveLink(link) || activeIndex == i}"
+      [routerLink]="links[i]"
+    >{{link | uppercase}}
+    </li>
+    <span class="dot" [ngStyle]="{left:getDotPosition()}"></span>
+
+  </div>
+  <div class="right-nav">
+    <button class="btn btn-primary">Sign in</button>
+  </div>
+</nav>

@@ -1,0 +1,42 @@
+
+.nav-content li{
+  cursor: pointer;
+  padding: 0.5rem;
+  font-size: 1rem;
+  &:not(:last-child)
+  {
+    margin-right: 1rem;
+  }
+}
+
+.nav-content li:hover
+{
+  color: #2081b4;
+}
+.nav-content li.active
+{
+  color: #2081b4;
+}
+.nav-content
+{
+  position: relative;
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.dot
+{
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #2081b4, #4690e0, #2081b4);
+  transition: left 0.3s ease;
+
+}

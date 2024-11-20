@@ -32,7 +32,8 @@
               "src/styles.css"
             ],
             "scripts": [
-              "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+
 
             ]
           },
