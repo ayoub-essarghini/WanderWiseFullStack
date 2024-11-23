@@ -1,0 +1,321 @@
+.hero {
+  /* position: relative; */
+  width: 100%;
+  height: 100vh;
+}
+
+.custom-shape-divider-top-1732124825 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: -1;
+}
+
+.custom-shape-divider-top-1732124825 svg {
+  position: relative;
+  display: block;
+  width: calc(169% + 1px);
+  height: 100vh;
+}
+
+.subtitle {
+  color: var(--primary-color);
+}
+
+.custom-shape-divider-top-1732124825 .shape-fill {
+  fill: #d7e6fa7d;
+}
+
+.slogan {
+  color: #8c8b8b;
+  font-weight: 400;
+}
+
+.book-badge {
+  width: 30%;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  background: #f6f9ff;
+  border-radius: 1.5rem;
+  box-shadow: rgba(68, 68, 68, 0.3) 1px 1px 8px;
+  color: #41ddb8;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.hero-title h1 {
+  font-size: 5rem;
+}
+
+.img-container {
+  max-width: 40%;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: #2081b4;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.search-box {
+  display: flex;
+  position: absolute;
+  justify-content: space-between !important;
+  align-items: center;
+  height: 120px;
+  width: 60%;
+  bottom: 20%;
+  left: 20%;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: rgba(68, 68, 68, 0.24) 1px 5px 10px;
+}
+
+.search-box .search-btn {
+  width: 20%;
+  border-radius: 0;
+  height: 100%;
+  background: var(--primary-color);
+  color: #f6f9ff;
+}
+
+.section-subtitle {
+  max-width: 40%;
+  margin: auto;
+  font-size: 1rem;
+  text-justify: inter-word;
+  color: var(--list-inactive-color);
+}
+
+.show-all {
+  font-size: 1rem;
+  color: var(--list-active-color);
+  font-weight: 400;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  /* padding: 1rem; */
+}
+
+.destinations-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.destinations-cards .card {
+  position: relative;
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.destinations-cards .card .infos {
+  width: 100%;
+  height: 100%;
+  padding: 0.8rem;
+  /* align-items: center; */
+  position: absolute;
+  bottom: 0;
+  color: white;
+
+  transition: background-color 0.2s ease-in;
+}
+
+.destinations-cards .card .infos.open {
+  background-color: rgba(0, 0, 0, 0.445);
+}
+
+.destinations-cards .card .infos .sub-info {
+  position: absolute;
+  bottom: 1rem;
+}
+
+.tour-badge {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  padding: 0.2rem 1.2rem;
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+}
+
+.card-foot {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.2s ease-in;
+}
+
+.card-foot.open {
+  max-height: 500px; /* Set a large enough value to allow the content to expand */
+}
+
+@media screen and (max-width: 475px) {
+  .hero {
+    display: block;
+    height: auto;
+    margin-bottom: 2rem;
+  }
+  .slogan {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    text-justify: auto;
+    font-size: 1rem;
+  }
+  .left {
+    width: 100%;
+  }
+  .img-container {
+    display: none;
+  }
+
+  .book-badge {
+    width: 50%;
+  }
+
+  .hero-title h1 {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .search-box {
+    width: 100%;
+    position: static;
+    margin: auto;
+    margin-top: 2rem;
+    font-size: 0.5rem !important;
+    overflow-x: auto;
+    /* left: 10%; */
+  }
+  .search-box .search-btn {
+    width: 20%;
+    font-size: 0.5rem;
+  }
+
+  .section-subtitle {
+    max-width: 80%;
+  }
+
+  .destinations-cards {
+    grid-template-columns: repeat(1, 1fr) !important;
+
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hero {
+    display: block;
+    height: auto;
+    margin-bottom: 2rem;
+  }
+  .book-badge {
+    width: 30%;
+  }
+  .slogan {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    text-justify: auto;
+  }
+  .left {
+    width: 100%;
+  }
+  .img-container {
+    display: none;
+  }
+
+  .hero-title h1 {
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  .search-box {
+    width: 90%;
+    position: static;
+    margin: auto;
+    margin-top: 2rem;
+    font-size: 1rem !important;
+    /* left: 10%; */
+  }
+  .search-box .search-btn {
+    width: 30%;
+  }
+
+  .section-subtitle {
+    max-width: 80%;
+  }
+
+  .destinations-cards {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+  }
+}
+
+/* For Desktops and Larger Screens */
+@media screen and (max-width: 1024px) {
+  .hero {
+    display: block;
+    height: auto;
+    margin-bottom: 2rem;
+  }
+  .slogan {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    text-justify: auto;
+  }
+  .left {
+    width: 100%;
+  }
+  .img-container {
+    display: none;
+  }
+
+  .hero-title h1 {
+    font-size: 5rem;
+    text-align: center;
+  }
+
+  .search-box {
+    width: 80%;
+    position: static;
+    margin: auto;
+    margin-top: 2rem;
+    font-size: 1rem !important;
+    /* left: 10%; */
+  }
+  .search-box .search-btn {
+    width: 20%;
+  }
+
+  .section-subtitle {
+    max-width: 80%;
+    text-align: center;
+    text-justify: auto;
+  }
+
+  .destinations-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+  }
+}

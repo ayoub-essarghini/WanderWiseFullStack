@@ -1,3 +1,131 @@
+<div class="hero">
+  <div class="custom-shape-divider-top-1732124825">
+    <svg
+      data-name="Layer 1"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1200 120"
+      preserveAspectRatio="none"
+    >
+      <path
+        d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+        opacity=".25"
+        class="shape-fill"
+      ></path>
+      <path
+        d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+        opacity=".5"
+        class="shape-fill"
+      ></path>
+      <path
+        d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
+        class="shape-fill"
+      ></path>
+    </svg>
+  </div>
 
-<h1>Hello</h1>
+  <div class="container">
+    <div class="row">
+      <div class="left col-12 col-lg-6 col-md-6 col-sm-12 mt-5">
+        <div class="book-badge mt-4">Book With Us!</div>
 
+        <div class="hero-title mt-5">
+          <h1>Find Next Place To <span class="subtitle">Visit</span></h1>
+          <h5 class="slogan">
+            Discover amzaing places at exclusive deals. Eat, Shop, Visit
+            interesting places around the world.
+          </h5>
+        </div>
+      </div>
+      <div class="img-container col-12 col-lg-6 col-md-6 col-sm-12 mt-5">
+        <img
+          class="hero-img"
+          src="https://images.pexels.com/photos/6348541/pexels-photo-6348541.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="search-box">
+    <div class="keywords p-3">
+      <small style="margin-left: 1rem">Keywords</small>
+      <input
+        style="font-size: 0.9rem; box-shadow: none !important; border: none"
+        class="form-control"
+        type="text"
+        placeholder="Type Your Keywords"
+      />
+    </div>
+    <div class="destination p-3">
+      <small style="margin-left: 1rem">Destination</small>
+      <select
+        style="font-size: 0.9rem; box-shadow: none !important; border: none"
+        class="form-control form-select"
+      >
+        <option>Any</option>
+        <option>Morocco</option>
+        <option>America</option>
+        <option>Spain</option>
+      </select>
+    </div>
+    <div class="duration p-3">
+      <small style="margin-left: 1rem">Duration</small>
+      <select
+        style="font-size: 0.9rem; box-shadow: none !important; border: none"
+        class="form-control form-select"
+      >
+        <option>Any</option>
+        <option>1 Day Tour</option>
+        <option>2-4 Days Tour</option>
+        <option>5-7 Days Tour</option>
+        <option>7+ Days Tour</option>
+      </select>
+    </div>
+
+    <button class="search-btn btn">
+      <i class="fas fa-search" style="font-size: 1.2rem"></i> <br />
+      Search Now
+    </button>
+  </div>
+</div>
+
+<section class="container top-destination text-center">
+  <div class="top">
+    <h1>Top <span class="subtitle">Destinations </span></h1>
+    <p class="section-subtitle mt-3">
+      Explore our top destinations voted by more than 100,000+ customers around
+      the world.
+    </p>
+    <h6 class="show-all align-items-center" (click)="goToDestinations()">
+      All Destinations
+      <i
+        class="fa-solid fa-arrow-right text-muted"
+        style="margin-left: 0.5rem"
+      ></i>
+    </h6>
+    <hr style="width: 135px" class="mx-auto" />
+  </div>
+
+  <div class="destinations-cards">
+    <div
+      class="card"
+      *ngFor="let card of cards; let i = index"
+      (mouseenter)="onCardHover(i)"
+      (mouseleave)="onCardLeave(i)"
+    >
+    <strong class="tour-badge">{{card.tours}}</strong>
+      <img [src]="card.img" alt="dsds" />
+      <div class="infos" [ngClass]="{ open: card.isHovered }">
+        <div class="sub-info text-center">
+          <h4>{{ card.title }}</h4>
+          <div class="card-foot" [ngClass]="{ open: card.isHovered }">
+            <p style="max-width: 80%; margin: auto">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos,
+              recusandae?
+            </p>
+            <div class="view-all p-2" style="color: var(--primary-color); cursor: pointer;">View all tours</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

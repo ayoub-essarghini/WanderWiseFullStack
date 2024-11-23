@@ -1,42 +1,122 @@
+.navbar {
+  position: relative; /* Initially not fixed */
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensures it's on top of other elements */
+}
+
+.navbar.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #ffffffc2; /* Optional, to ensure visibility */
+  width: 100%;
+  box-shadow: 0 4px 2px -2px rgba(128, 128, 128, 0.253); /* Optional for effect */
+  backdrop-filter: blur(10px); /* Adjust the value for more or less blur */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+}
+.nav-content
+{
+
+  position: relative;
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .nav-content li{
   cursor: pointer;
   padding: 0.5rem;
   font-size: 1rem;
+  color: var(--list-inactive-color);
   &:not(:last-child)
   {
-    margin-right: 1rem;
+    margin-right: 2rem;
   }
 }
 
 .nav-content li:hover
 {
-  color: #2081b4;
+  color: var(--list-active-color);
 }
 .nav-content li.active
 {
-  color: #2081b4;
+  color: var(--list-active-color);
 }
-.nav-content
-{
-  position: relative;
-  display: flex;
-  list-style: none;
-  justify-content: center;
-  align-items: center;
-}
-
-
 
 .dot
 {
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: linear-gradient(45deg, #2081b4, #4690e0, #2081b4);
+  background-color: var(--list-inactive-color);;
   transition: left 0.3s ease;
 
 }
+
+.menu-icon
+{
+  display: none;
+}
+
+.sign-btn
+{
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .nav-content
+  {
+    display: none;
+  }
+
+  .sign-btn
+  {
+    display: none;
+  }
+
+  .menu-icon
+  {
+    display: block;
+    cursor: pointer;
+  }
+  .lang-switch
+  {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .nav-content
+  {
+    display: none;
+  }
+
+  .sign-btn
+  {
+    display: none;
+  }
+
+  .menu-icon
+  {
+    display: block;
+    cursor: pointer;
+  }
+  .lang-switch
+  {
+    display: block;
+  }
+}
+
+
+
+
