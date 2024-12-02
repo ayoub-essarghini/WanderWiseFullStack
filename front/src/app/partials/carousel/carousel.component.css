@@ -3,6 +3,8 @@
 {
   width: 100%;
   position: relative;
+  margin: auto;
+  padding: 2rem;
   /* background-color: #007bff; */
 }
 
@@ -14,12 +16,13 @@
 }
 
 .carousel {
+  width: 100%;
   display: flex;
   transition: transform 0.5s ease;
 }
 
 .carousel .card {
-  min-width: calc(30% + 20px); /* Adjust card width */
+  min-width: calc(31.5% + 15px); /* Adjust card width */
   margin: 0 10px; /* Adjust spacing */
   text-align: center;
   height: auto;
@@ -28,8 +31,6 @@
   overflow: hidden;
   border: none;
 }
-
-
 
 .prev
 {

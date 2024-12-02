@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,15 +10,16 @@ import { CommonModule } from '@angular/common';
 })
 export class CarouselComponent implements OnInit {
   currentIndex = 0;
-  cardWidth = 380;
+  cardWidth: number = 0;
   slide_active = true;
   startIndex = 0;
   maxVisible = 3;
   private autoSlideInterval: any;
   @Input() slides: { image: string }[] = [];
   ngOnInit() {
-    this.startAutoSlide();
+    // this.startAutoSlide();
     console.log(this.slide_active);
+    this.calculateCardWidth();
   }
 
   next() {
@@ -52,5 +53,16 @@ export class CarouselComponent implements OnInit {
   onMouseLeave() {
     this.slide_active = true;
     this.startAutoSlide(); // Resume auto-slide when no longer hovering
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.calculateCardWidth();
+  }
+
+  private calculateCardWidth(): void {
+    const containerWidth = window.innerWidth * 0.7; // Get the current width of the viewport or a specific container
+    const cardsPerRow = 3; // Number of cards you want per row
+    this.cardWidth = containerWidth / cardsPerRow; // Adjust this to calculate card width dynamically
   }
 }
