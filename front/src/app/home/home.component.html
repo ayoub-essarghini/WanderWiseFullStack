@@ -112,7 +112,7 @@
       (mouseenter)="onCardHover(i)"
       (mouseleave)="onCardLeave(i)"
     >
-    <strong class="tour-badge">{{card.tours}}</strong>
+      <strong class="tour-badge">{{ card.tours }}</strong>
       <img [src]="card.img" alt="dsds" />
       <div class="infos" [ngClass]="{ open: card.isHovered }">
         <div class="sub-info text-center">
@@ -122,10 +122,17 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos,
               recusandae?
             </p>
-            <div class="view-all p-2" style="color: var(--primary-color); cursor: pointer;">View all tours</div>
+            <div
+              class="view-all p-2"
+              style="color: var(--primary-color); cursor: pointer"
+            >
+              View all tours
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<app-carousel [slides]="carousel_items"></app-carousel>

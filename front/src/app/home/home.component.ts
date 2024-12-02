@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {Router} from "@angular/router";
+import { CarouselComponent } from "../partials/carousel/carousel.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-  CommonModule
-  ],
+    CommonModule,
+    CarouselComponent
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -23,6 +25,15 @@ export class HomeComponent {
     
   ];
 
+  
+  carousel_items = [
+    { image: 'assets/slides/slide1.jpg' },
+    { image: 'assets/slides/slide2.jpg'},
+    { image: 'assets/slides/slide3.jpg'},
+    { image: 'assets/slides/slide4.jpg'},
+    { image: 'assets/slides/slide5.jpg'},
+  ];
+
   constructor(private router:Router){}
 
 
@@ -34,10 +45,6 @@ export class HomeComponent {
   onCardLeave(index: number) {
     this.cards[index].isHovered = false;
   }
-
-
-
-
 
 
   goToDestinations()
