@@ -1,0 +1,60 @@
+
+.main-container
+{
+  width: 100%;
+  position: relative;
+  margin: auto;
+  padding: 2rem;
+  /* background-color: #007bff; */
+}
+
+.carousel-container {
+  position: relative;
+  width: 60%; /* Adjust according to card width * 3 */
+  overflow: hidden;
+  margin: auto;
+}
+
+.carousel {
+  width: 100%;
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel .card {
+  min-width: calc(31.5% + 15px); /* Adjust card width */
+  margin: 0 10px; /* Adjust spacing */
+  text-align: center;
+  height: auto;
+  object-fit: cover !important;
+  border-radius: 0.5rem !important;
+  overflow: hidden;
+  border: none;
+}
+
+.prev
+{
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  /* background-color: #007bff; */
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  /* border-radius: 50%; */
+}
+.next {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translateY(-50%);
+  /* background-color: #007bff; */
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  /* border-radius: 50%;   */
+}
+
