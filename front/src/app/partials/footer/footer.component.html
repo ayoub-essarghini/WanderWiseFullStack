@@ -1,0 +1,39 @@
+<div class="footer-container">
+    <p-card class="footer-card" footer="© 2024 TravelTourTheme">
+      <div class="footer-content">
+        <div class="footer-left">
+          <!-- USD Dropdown -->
+          <p-dropdown [options]="currencies" [(ngModel)]="selectedCurrency" placeholder="USD" class="currency-dropdown"></p-dropdown>
+  
+          <!-- Contact Information -->
+          <div class="contact-info">
+            <p><strong>Contact</strong></p>
+            <p>T: 1-634-567-34</p>
+            <p>{{"E: contact@traveltourtheme.com"}}</p>
+          </div>
+        </div>
+  
+        <div class="footer-right">
+          <!-- Useful Links -->
+          <p-menu [model]="usefulLinks"></p-menu>
+  
+          <!-- Payment Security Message -->
+          <div class="payment-security">
+            <p>Pay Safely With Us</p>
+            <p>The payment is encrypted and transmitted securely with an SSL protocol.</p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Divider for separation -->
+      <p-divider></p-divider>
+  
+      <!-- Social Media Icons (Optional) -->
+      <div class="social-links">
+        <p-button icon="pi pi-facebook" class="social-button"></p-button>
+        <p-button icon="pi pi-twitter" class="social-button"></p-button>
+        <p-button icon="pi pi-linkedin" class="social-button"></p-button>
+      </div>
+    </p-card>
+  </div>
+  

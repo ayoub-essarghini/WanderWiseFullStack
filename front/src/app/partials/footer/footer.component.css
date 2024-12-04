@@ -1,0 +1,74 @@
+.footer-container {
+    position: relative;
+    background-color: #333;
+    color: white;
+    padding: 30px;
+    text-align: center;
+  }
+  
+  .footer-card {
+    background: #222;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  
+  .footer-left {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .footer-right {
+    flex: 1;
+  }
+  
+  .currency-dropdown {
+    width: 150px;
+    margin-bottom: 10px;
+  }
+  
+  .contact-info p {
+    margin: 5px 0;
+  }
+  
+  .payment-security p {
+    font-size: 14px;
+    color: lightgray;
+    margin-top: 10px;
+  }
+  
+  .social-links {
+    margin-top: 20px;
+  }
+  
+  .social-button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    margin: 0 10px;
+    font-size: 20px;
+  }
+  
+  .social-button:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .p-menu {
+    background-color: transparent;
+    border: none;
+  }
+  
+  .p-card-footer {
+    text-align: center;
+    background: #444;
+    color: white;
+  }
+  
