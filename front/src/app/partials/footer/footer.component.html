@@ -2,8 +2,11 @@
   <footer class="row row-cols-5 py-4 my-2 border-top">
     <div class="col">
       <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <svg class="bi me-2" width="40" height="32">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
       </a>
+      Wander<span [ngStyle]="{color:'#2081b4'}">Wise</span>
       <p class="text-muted">© 2021</p>
     </div>
 
@@ -12,7 +15,15 @@
     </div>
 
     <div class="col">
-      <h5>Section</h5>
+      <h5>Contact</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">T: +212-681406518</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">E: {{"contact@ayoub-dev.com"}}</a></li>
+      </ul>
+    </div>
+
+    <div class="col">
+      <h5>Useful Links</h5>
       <ul class="nav flex-column">
         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
@@ -23,25 +34,15 @@
     </div>
 
     <div class="col">
-      <h5>Section</h5>
-      <ul class="nav flex-column">
-        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-      </ul>
-    </div>
+      <h5>Pay Safely With Us</h5>
+      <small>The payment is encrypted and transmitted securely with an SSL protocol.</small>
+      <div class="payement-methods d-flex justify-content-center my-2">
+        <i class="fa-brands fa-cc-paypal" style="font-size: 2rem ;margin-right: 15px ;"></i>
+        <i class="fa-brands fa-cc-visa" style="font-size: 2rem ;margin-right: 15px ;"></i>
+        <i class="fa-brands fa-cc-mastercard" style="font-size: 2rem ;margin-right: 15px ;"></i>
+      </div>
 
-    <div class="col">
-      <h5>Section</h5>
-      <ul class="nav flex-column">
-        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-      </ul>
+
     </div>
   </footer>
 </div>

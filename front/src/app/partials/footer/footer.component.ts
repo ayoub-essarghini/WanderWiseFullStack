@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgStyle } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
     DropdownModule,
     FormsModule,
     MenuModule,
+    NgStyle
   ],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.css'
