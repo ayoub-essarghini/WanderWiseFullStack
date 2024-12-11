@@ -20,18 +20,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './footer.component.css'
 })
 export class FooterComponent {
-  currencies = [
-    { label: 'USD', value: 'USD' },
-    { label: 'EUR', value: 'EUR' },
-    { label: 'GBP', value: 'GBP' },
-  ];
-  selectedCurrency = 'USD'; // Default currency
 
-  usefulLinks = [
-    { label: 'Travel Blog & Tips', icon: 'pi pi-book' },
-    { label: 'Working With Us', icon: 'pi pi-users' },
-    { label: 'Be Our Partner', icon: 'pi pi-handshake' },
-  ];
 
 
 }

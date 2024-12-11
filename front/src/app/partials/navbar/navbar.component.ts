@@ -34,11 +34,11 @@ export class NavbarComponent implements OnInit {
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
    
-    // if (window.scrollY > 100) {
-    //  this.isScrolled = true;
-    // } else {
-    //   this.isScrolled = false;
-    // }
+    if (window.scrollY > 100) {
+     this.isScrolled = true;
+    } else {
+      this.isScrolled = false;
+    }
   }
 
   getActiveIndex(): number {
