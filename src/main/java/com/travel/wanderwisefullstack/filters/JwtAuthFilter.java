@@ -18,37 +18,43 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static com.travel.wanderwisefullstack.JWTUtils.JWT_SECRET;
+
 public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String jwtToken = request.getHeader("Authorization");
-        if (jwtToken != null && jwtToken.startsWith("Bearer ")) {
 
-            try {
-                jwtToken = jwtToken.substring(7);
-                Algorithm algorithm = Algorithm.HMAC256("mySecret1234");
-                JWTVerifier jwtVerifier = JWT.require(algorithm).build();
-                DecodedJWT decodedJWT = jwtVerifier.verify(jwtToken);
-                String username = decodedJWT.getSubject();
-                String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
-                Collection<GrantedAuthority> authorities = new ArrayList<>();
-                for (String role : roles) {
-                    authorities.add(new SimpleGrantedAuthority(role));
-                }
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username,null,authorities);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                filterChain.doFilter(request, response);
-
-            }
-            catch (Exception e) {
-                response.setHeader("error", e.getMessage());
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
-
-            }
-        }
-        else
-        {
+        if (request.getServletPath().equals("/refreshToken")) {
             filterChain.doFilter(request, response);
+        } else {
+            String jwtToken = request.getHeader("Authorization");
+            if (jwtToken != null && jwtToken.startsWith("Bearer ")) {
+
+                try {
+                    jwtToken = jwtToken.substring(7);
+                    Algorithm algorithm = Algorithm.HMAC256(JWT_SECRET);
+                    JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+                    DecodedJWT decodedJWT = jwtVerifier.verify(jwtToken);
+                    String username = decodedJWT.getSubject();
+                    String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
+                    Collection<GrantedAuthority> authorities = new ArrayList<>();
+                    for (String role : roles) {
+                        authorities.add(new SimpleGrantedAuthority(role));
+                    }
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                    filterChain.doFilter(request, response);
+
+                } catch (Exception e) {
+                    response.setHeader("error", e.getMessage());
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+
+                }
+            } else {
+                filterChain.doFilter(request, response);
+            }
         }
+
+
     }
 }

@@ -60,7 +60,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable).sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).headers(headers -> headers
                 // Disable all default headers
                 .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable) // Disable only X-Frame-Options
-        ).authorizeHttpRequests(authorize -> authorize.requestMatchers("/h2-console/**").permitAll().anyRequest().authenticated()).addFilter(new JwtFilter(authenticationManager)).addFilterBefore(new JwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
+        ).authorizeHttpRequests(authorize -> authorize.requestMatchers("/h2-console/**","/refreshToken/**","/login/**").permitAll().anyRequest().authenticated()).addFilter(new JwtFilter(authenticationManager)).addFilterBefore(new JwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
