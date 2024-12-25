@@ -23,6 +23,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -60,7 +63,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable).sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).headers(headers -> headers
                 // Disable all default headers
                 .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable) // Disable only X-Frame-Options
-        ).authorizeHttpRequests(authorize -> authorize.requestMatchers("/h2-console/**","/refreshToken/**","/login/**").permitAll().anyRequest().authenticated()).addFilter(new JwtFilter(authenticationManager)).addFilterBefore(new JwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
+        ).cors(cors -> cors.configurationSource(corsConfigurationSource())).authorizeHttpRequests(authorize -> authorize.requestMatchers("/h2-console/**", "/refreshToken/**", "/login/**,", "/swagger-ui/**", "/v3/api-docs/**").permitAll().anyRequest().authenticated()).addFilter(new JwtFilter(authenticationManager)).addFilterBefore(new JwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -71,6 +74,30 @@ public class SecurityConfig {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(userDetailsService());
         return authenticationManagerBuilder.build();
+    }
+
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(List.of("*")); // Allow all origins
+//        configuration.setAllowedMethods(List.of("*")); // Allow all HTTP methods
+//        configuration.setAllowedHeaders(List.of("*")); // Allow all headers
+//        configuration.setAllowCredentials(true); // Allow cookies (optional)
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration); // Apply CORS settings to all endpoints
+//        return source;
+//    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:4200"); // Allow Angular app
+        configuration.addAllowedMethod("*"); // Allow all HTTP methods
+        configuration.addAllowedHeader("*"); // Allow all headers
+        configuration.setAllowCredentials(true); // Allow cookies
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // Apply CORS settings to all endpoints
+        return source;
     }
 
 

@@ -1,6 +1,12 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { NgClass, NgForOf, NgIf, NgStyle, UpperCasePipe } from "@angular/common";
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
+import {CommonModule} from "@angular/common";
+import {AuthService} from "../../services/auth.service";
+import { AvatarModule } from 'primeng/avatar';
+import { OverlayModule } from 'primeng/overlay';
+import {UserModule} from "../../module/user.module";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +16,10 @@ import { Router, RouterLink, RouterLinkActive } from "@angular/router";
     NgStyle,
     NgClass,
     RouterLink,
- 
+    AvatarModule,
+    CommonModule,
+    OverlayModule
+
   ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
@@ -20,10 +29,12 @@ export class NavbarComponent implements OnInit {
   activeIndex: number = -1;
   hoveredIndex: number = -1;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService,private messageService:MessageService) {}
   isScrolled:boolean = false;
+  user!:UserModule;
   ngOnInit() {
     // Determine active link based on the current route
+    // user = this.authService.loadProfile()
     this.links.forEach((link, index) => {
       if (this.router.url.includes(link)) {
         this.activeIndex = index;
@@ -33,12 +44,17 @@ export class NavbarComponent implements OnInit {
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
-   
+
     if (window.scrollY > 100) {
      this.isScrolled = true;
     } else {
       this.isScrolled = false;
     }
+  }
+
+  isAuth(): boolean
+  {
+      return this.authService.isAuthenticated();
   }
 
   getActiveIndex(): number {
@@ -51,9 +67,9 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  setActiveLink(index: number) {
-    this.activeIndex = index;
-  }
+  // setActiveLink(index: number) {
+  //   this.activeIndex = index;
+  // }
 
   clearHover() {
     this.hoveredIndex = -1;
@@ -80,5 +96,11 @@ export class NavbarComponent implements OnInit {
     this.activeIndex = 0;
   }
 
-  
+
+  handleLogOut() {
+
+    this.authService.logout()
+    this.messageService.add({ severity: "success", summary: "Logout", detail: "Logout successfully!", life: 3000 });
+
+  }
 }

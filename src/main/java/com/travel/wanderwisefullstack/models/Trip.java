@@ -1,6 +1,7 @@
 package com.travel.wanderwisefullstack.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -30,6 +31,10 @@ public class Trip {
 
     @Lob
     private String itinerary;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToOne
+    AppUser user;
 
 
 }

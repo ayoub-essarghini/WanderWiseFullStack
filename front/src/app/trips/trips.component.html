@@ -1,1 +1,11 @@
-<p>trips works!</p>
+<div *ngFor="let trip of trips" >
+  <h2>{{ trip.destination }}</h2>
+  <p>{{ trip.description }}</p>
+  <p>Price: ${{ trip.price | currency}}</p>
+  <p>Start Date: {{ trip.startDate }}</p>
+  <p>End Date: {{ trip.endDate }}</p>
+  <p>Duration: {{ trip.duration }} days</p>
+  <p>Spots available: {{ trip.spots }}</p>
+  <hr />
+</div>
+

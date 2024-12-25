@@ -41,23 +41,27 @@ public class AccountRestController {
     public AccountRestController(AccountService accountService) {
         this.accountService = accountService;
     }
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(path = "/users")
     public List<AppUser> getUsers() {
         return accountService.listUsers();
     }
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/add-user")
-    public AppUser saveUser(@RequestBody AppUser user){
+    public AppUser saveUser(@RequestBody AppUser user) {
         return accountService.addNewUser(user);
     }
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/addRoleToUser")
-    public void addRoleToUser(@RequestBody RoleUserForm roleUserForm){
-        accountService.addRoleToUser(roleUserForm.getUserName(),roleUserForm.getRoleName());
+    public void addRoleToUser(@RequestBody RoleUserForm roleUserForm) {
+        accountService.addRoleToUser(roleUserForm.getUserName(), roleUserForm.getRoleName());
     }
+
     @GetMapping("/refreshToken")
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String jwtToken = request.getHeader("Authorization");
         if (jwtToken != null && jwtToken.startsWith("Bearer ")) {
             try {
@@ -67,13 +71,8 @@ public class AccountRestController {
                 DecodedJWT decodedJWT = jwtVerifier.verify(jwtToken);
                 String username = decodedJWT.getSubject();
 
-              AppUser user = accountService.loadUserByUsername(username);
-                String jwtAccessToken = JWT.create()
-                        .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis()+TIME_OUT_ACCESS_TOKEN))
-                        .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles",user.getRoles().stream().map(AppRole::getName).collect(Collectors.toList()))
-                        .sign(algorithm);
+                AppUser user = accountService.loadUserByUsername(username);
+                String jwtAccessToken = JWT.create().withSubject(user.getUsername()).withExpiresAt(new Date(System.currentTimeMillis() + TIME_OUT_ACCESS_TOKEN)).withIssuer(request.getRequestURL().toString()).withClaim("roles", user.getRoles().stream().map(AppRole::getName).collect(Collectors.toList())).sign(algorithm);
 
                 Map<String, String> tokenDetails = new HashMap<>();
                 tokenDetails.put("access_token", jwtAccessToken);
@@ -81,20 +80,16 @@ public class AccountRestController {
                 response.setContentType("application/json");
                 new ObjectMapper().writeValue(response.getOutputStream(), tokenDetails);
 
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 response.setHeader("error", e.getMessage());
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
 
             }
-        }
-        else
-            throw new RuntimeException("refresh token is invalid");
+        } else throw new RuntimeException("refresh token is invalid");
     }
 
     @GetMapping(path = "/profile")
-    public AppUser profile(Principal principal)
-    {
+    public AppUser profile(Principal principal) {
         return accountService.loadUserByUsername(principal.getName());
     }
 

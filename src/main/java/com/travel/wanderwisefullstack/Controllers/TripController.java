@@ -1,6 +1,7 @@
 package com.travel.wanderwisefullstack.Controllers;
 
 import com.travel.wanderwisefullstack.Services.trip.TripServices;
+import com.travel.wanderwisefullstack.dto.TripDTO;
 import com.travel.wanderwisefullstack.models.Trip;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -48,8 +49,8 @@ public class TripController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity < Trip> createTrip(@RequestBody Trip trip) {
-        Trip createdTrip = tripServices.createTrip(trip);
+    public ResponseEntity < TripDTO> createTrip(@RequestBody Trip trip) {
+        TripDTO createdTrip = tripServices.createTrip(trip);
         return ResponseEntity.ok(createdTrip);
     }
     @DeleteMapping("/{id}")
