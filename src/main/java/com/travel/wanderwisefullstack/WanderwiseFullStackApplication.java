@@ -1,7 +1,8 @@
 package com.travel.wanderwisefullstack;
 
-import com.travel.wanderwisefullstack.Services.trip.TripServices;
+import com.travel.wanderwisefullstack.Services.trip.TripService;
 import com.travel.wanderwisefullstack.Services.user.AccountService;
+import com.travel.wanderwisefullstack.dto.TripRequestDTO;
 import com.travel.wanderwisefullstack.models.AppRole;
 import com.travel.wanderwisefullstack.models.AppUser;
 import com.travel.wanderwisefullstack.models.Trip;
@@ -21,7 +22,6 @@ import java.util.List;
 import java.util.Random;
 
 @SpringBootApplication
-
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WanderwiseFullStackApplication {
 
@@ -34,7 +34,7 @@ public class WanderwiseFullStackApplication {
         return new BCryptPasswordEncoder();
     }
     @Bean
-    CommandLineRunner start(AccountService accountService, TripServices tripServices)
+    CommandLineRunner start(AccountService accountService, TripService tripServices)
     {
         return args -> {
             if (!adExist(accountService))
@@ -58,8 +58,8 @@ public class WanderwiseFullStackApplication {
                 cities.add("Turkish");
                 for (int i = 0; i < 10; i++)
                 {
-                    Trip trip = new Trip();
-                    trip.setId(null);
+                    TripRequestDTO trip = new TripRequestDTO();
+
                     LocalDateTime startDate = generateRandomFutureDate();
                     LocalDateTime endDate = generateRandomFutureDateAfter(startDate);
                     trip.setStartDate(startDate);
@@ -69,7 +69,7 @@ public class WanderwiseFullStackApplication {
                     trip.setDuration((int) duration.toDays());
                     trip.setDescription("Description of trip to " + cities.get(i));
                     trip.setPrice(Math.random() * 2000);
-                    trip.setUser(admin);
+
                 trip.setItinerary("");
                     trip.setSpots((int) (Math.random() * 200));
 

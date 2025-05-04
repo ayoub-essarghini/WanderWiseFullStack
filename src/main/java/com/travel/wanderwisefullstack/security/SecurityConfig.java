@@ -76,17 +76,7 @@ public class SecurityConfig {
         return authenticationManagerBuilder.build();
     }
 
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(List.of("*")); // Allow all origins
-//        configuration.setAllowedMethods(List.of("*")); // Allow all HTTP methods
-//        configuration.setAllowedHeaders(List.of("*")); // Allow all headers
-//        configuration.setAllowCredentials(true); // Allow cookies (optional)
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration); // Apply CORS settings to all endpoints
-//        return source;
-//    }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

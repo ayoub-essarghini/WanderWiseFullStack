@@ -1,12 +1,11 @@
 package com.travel.wanderwisefullstack.Controllers;
 
-import com.travel.wanderwisefullstack.Services.trip.TripServices;
-import com.travel.wanderwisefullstack.dto.TripDTO;
-import com.travel.wanderwisefullstack.models.Trip;
+import com.travel.wanderwisefullstack.Services.trip.TripService;
+import com.travel.wanderwisefullstack.dto.TripRequestDTO;
+import com.travel.wanderwisefullstack.dto.TripResponseDTO;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,44 +17,33 @@ import java.util.List;
 
 public class TripController {
 
-    private final TripServices tripServices;
+    private final TripService tripService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
-    public ResponseEntity<List<Trip>> getAllTrips() {
-        List<Trip> trips = tripServices.getAllTrips();
-        return ResponseEntity.ok(trips);
+    public ResponseEntity<List<TripResponseDTO>> getAllTrips() {
+        return ResponseEntity.ok(tripService.getAllTrips());
     }
 
-    @GetMapping("/{id}")
-    @Secured({"ADMIN","USER"})
-    public ResponseEntity<Trip> getTripById(@PathVariable Long id) {
-        Trip trip =  tripServices.getTripById(id);
-        return ResponseEntity.ok(trip);
+    @DeleteMapping("/{tripId}/delete")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteTrip(@PathVariable Long tripId) {
+        tripService.deleteTrip(tripId);
+        return ResponseEntity.ok("Trip deleted successfully.");
     }
 
-    @PostMapping("/book/{id}")
-    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
-    public ResponseEntity<String> bookTrip(@PathVariable Long id) {
-        try {
-            tripServices.bookTrip(id); // Service logic to book the trip
-            return ResponseEntity.ok("Trip successfully booked.");
-        }catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An error occurred while booking the trip.");
-        }
+    @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> createTrip(@RequestBody TripRequestDTO dto) {
+        return ResponseEntity.ok(tripService.createTrip(dto));
+    }
+
+    @PutMapping("/{tripId}/update")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateTrip(@PathVariable Long tripId, @RequestBody TripRequestDTO dto) {
+        return ResponseEntity.ok(tripService.updateTrip(tripId, dto));
     }
 
 
-    @PostMapping("/add")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity < TripDTO> createTrip(@RequestBody Trip trip) {
-        TripDTO createdTrip = tripServices.createTrip(trip);
-        return ResponseEntity.ok(createdTrip);
-    }
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public void deleteTrip(@PathVariable Long id) {
-        tripServices.deleteTrip(id);
-    }
+
+
 }
